@@ -29,7 +29,7 @@
             app:layout_constraintVertical_bias="0.366" />
 
         <EditText
-            android:id="@+id/editTextText2"
+            android:id="@+id/cityInputTxt"
             android:layout_width="226dp"
             android:layout_height="68dp"
             android:layout_marginTop="48dp"
@@ -53,7 +53,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText2"
+            app:layout_constraintTop_toBottomOf="@+id/cityInputTxt"
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
