@@ -1,13 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <include
         android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/cityTxt"
+            android:layout_width="407dp"
+            android:layout_height="31dp"
+            android:text="Enter a city name"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.366" />
+
+        <EditText
+            android:id="@+id/editTextText2"
+            android:layout_width="226dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="48dp"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cityTxt"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/searchBtn"
+            android:layout_width="186dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="39dp"
+            android:text="Search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextText2"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/myLocBtn"
+            android:layout_width="186dp"
+            android:layout_height="62dp"
+            android:text="Use my location"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchBtn"
+            app:layout_constraintVertical_bias="0.265" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
