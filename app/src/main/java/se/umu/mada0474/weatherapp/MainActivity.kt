@@ -1,23 +1,20 @@
 package se.umu.mada0474.weatherapp
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import org.json.JSONObject
-import kotlin.system.exitProcess
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ToolbarHandler(){
 
     private lateinit var apiService: ApiService
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -66,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location : Location? ->
                 if (location != null) {
+                    println(location)
                     apiService.getWeatherData(location.latitude, location.longitude)
                 }
             }
@@ -83,30 +81,8 @@ class MainActivity : AppCompatActivity() {
 
     fun handleReceivedDataFromAPI(json: JSONObject){
         println(json)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.actionbar_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-
-            R.id.menu_item_1 -> {
-                exitProcess(0)
-                return true
-            }
-
-            R.id.menu_item_2 -> {
-                return true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
+        val intent = Intent(this, DisplaySearchActivity::class.java)
+        intent.putExtra("weatherData", json.toString())
+        startActivity(intent)
     }
 }
