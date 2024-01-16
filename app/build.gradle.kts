@@ -74,4 +74,5 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation ("com.squareup.okhttp3:okhttp:4.9.1")
     implementation(kotlin("reflect"))
+    implementation ("com.google.code.gson:gson:2.10.1")
 }

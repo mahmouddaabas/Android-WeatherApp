@@ -1,12 +1,18 @@
 package se.umu.mada0474.weatherapp
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.json.JSONObject
+import java.util.prefs.Preferences
 
 
 class DisplaySearchActivity : ToolbarHandler() {
@@ -38,6 +44,7 @@ class DisplaySearchActivity : ToolbarHandler() {
         temperatureTxt.text = "$temperature °C"
 
         setWeatherImage(temperature)
+        saveWeatherToHistory(temperature, cityName)
 
         val long = data.getString("longitude")
         val lat = data.getString("latitude")
@@ -63,4 +70,27 @@ class DisplaySearchActivity : ToolbarHandler() {
             weatherImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cold))
         }
     }
+
+    private fun saveWeatherToHistory(temperature: String, cityName: String?) {
+        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val gson = Gson()
+
+        // Retrieve existing weather history
+        val existingJson = sharedPreferences.getString("WEATHER_HISTORY_KEY", null)
+        val existingType = object : TypeToken<ArrayList<String>>() {}.type
+        val existingWeatherHistory: ArrayList<String> = gson.fromJson(existingJson, existingType) ?: ArrayList()
+
+        // Add new entry
+        existingWeatherHistory.add("$temperature °C $cityName")
+
+        // Convert the updated list to JSON
+        val updatedJson = gson.toJson(existingWeatherHistory)
+
+        // Save the updated list to SharedPreferences
+        val editor = sharedPreferences.edit()
+        editor.apply {
+            putString("WEATHER_HISTORY_KEY", updatedJson)
+        }.apply()
+    }
+
 }
