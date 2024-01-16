@@ -2,11 +2,17 @@ package se.umu.mada0474.weatherapp
 
 import android.location.Address
 import android.location.Geocoder
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import org.chromium.net.CronetEngine
 import org.chromium.net.CronetException
 import org.chromium.net.UrlRequest
 import org.chromium.net.UrlResponseInfo
 import org.json.JSONObject
+import java.io.IOException
 import java.nio.ByteBuffer
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -22,7 +28,35 @@ class ApiService {
          this.mainActivity = mainActivity;
      }
 
-    fun getCoordinates(locationName: String): List<Address>? {
+    interface ApiResponseCallback {
+        fun onResponse(body: String?)
+        fun onFailure()
+    }
+    fun getCoordinatesFromName(locationName: String, callback: ApiResponseCallback) {
+        val url = "https://geocoding-api.open-meteo.com/v1/search?name=$locationName&count=10&language=en&format=json"
+
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        val client = OkHttpClient()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                callback.onFailure()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string()
+                    callback.onResponse(responseBody)
+                } else {
+                    callback.onFailure()
+                }
+            }
+        })
+    }
+
+    fun getNameFromCoordinates(locationName: String): List<Address>? {
         geocoder = Geocoder(mainActivity)
         val addressList: List<Address>
         addressList = geocoder.getFromLocationName(locationName, 1)!!;

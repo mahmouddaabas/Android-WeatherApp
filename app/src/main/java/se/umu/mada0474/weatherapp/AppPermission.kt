@@ -8,7 +8,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import se.umu.mada0474.weatherapp.constants.AppConstants
 
-class AppPermissions {
+class AppPermissions{
 
     fun isLocationOk(context: Context): Boolean {
         return ContextCompat.checkSelfPermission(
@@ -17,14 +17,9 @@ class AppPermissions {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-
-
     fun requestLocationPermission(activity: Activity) {
         ActivityCompat.requestPermissions(
-            activity,
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-            ),
+            activity,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
             AppConstants.LOCATION_REQUEST_CODE
         )
     }
