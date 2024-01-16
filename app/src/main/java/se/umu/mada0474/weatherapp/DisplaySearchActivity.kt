@@ -1,12 +1,12 @@
 package se.umu.mada0474.weatherapp
 
 import android.annotation.SuppressLint
-import android.location.Geocoder
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import org.json.JSONObject
-import java.util.Locale
 
 
 class DisplaySearchActivity : ToolbarHandler() {
@@ -31,9 +31,13 @@ class DisplaySearchActivity : ToolbarHandler() {
 
     @SuppressLint("SetTextI18n")
     fun addDataToFields(data: JSONObject, cityName: String?) {
-        val weatherTxt = findViewById<TextView>(R.id.weatherTxt);
+        val temperatureTxt = findViewById<TextView>(R.id.temperatureTxt);
+        val cityTxt = findViewById<TextView>(R.id.cityTxt);
         val temperature = data.getJSONObject("current_weather").getString("temperature")
-        weatherTxt.text = "The temperature in $cityName: is $temperature °C"
+        cityTxt.text = "$cityName"
+        temperatureTxt.text = "$temperature °C"
+
+        setWeatherImage(temperature)
 
         val long = data.getString("longitude")
         val lat = data.getString("latitude")
@@ -44,5 +48,19 @@ class DisplaySearchActivity : ToolbarHandler() {
         findViewById<TextView>(R.id.latTxt).text = "Latitude: $lat"
         findViewById<TextView>(R.id.timeTxt).text = "Time: $time"
         findViewById<TextView>(R.id.windSpeedTxt).text = "Wind Speed: $windspeed"
+    }
+
+    fun setWeatherImage(temperature: String){
+        val weatherImage = findViewById<ImageView>(R.id.weatherImage)
+        val temperatureDouble = temperature.toDouble()
+        if(temperatureDouble >= 10){
+            weatherImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.hot))
+        }
+        else if(temperatureDouble < 10 && temperatureDouble > 0){
+            weatherImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.mid))
+        }
+        else {
+            weatherImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cold))
+        }
     }
 }

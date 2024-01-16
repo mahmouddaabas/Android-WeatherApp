@@ -3,6 +3,7 @@ package se.umu.mada0474.weatherapp
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -105,7 +106,7 @@ class MainActivity : ToolbarHandler(){
             val lat = json.getString("latitude")
             val geocoder = Geocoder(this, Locale.getDefault())
             val addresses: List<Address>? = geocoder.getFromLocation(lat.toDouble(), long.toDouble(), 1)
-            val cityName: String = addresses!![0].getAddressLine(0)
+            val cityName: String = addresses!![0].locality
             intent.putExtra("cityName", cityName)
         }
         else {
