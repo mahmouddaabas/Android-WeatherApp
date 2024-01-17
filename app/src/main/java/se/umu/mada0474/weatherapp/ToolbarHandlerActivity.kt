@@ -8,13 +8,23 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlin.system.exitProcess
 
 
-open class ToolbarHandler : AppCompatActivity() {
+/**
+ * This class manages the toolbar.
+ * @author Mahmoud Daabas
+ */
+open class ToolbarHandlerActivity : AppCompatActivity() {
 
+    /**
+     * Creates the toolbar
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.actionbar_menu, menu)
         return true
     }
 
+    /**
+     * Handles the selected options in the toolbar menu.
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -23,8 +33,8 @@ open class ToolbarHandler : AppCompatActivity() {
             }
 
             R.id.menu_item_1 -> {
+                moveTaskToBack(true)
                 exitProcess(0)
-                return true
             }
 
             R.id.menu_item_2 -> {

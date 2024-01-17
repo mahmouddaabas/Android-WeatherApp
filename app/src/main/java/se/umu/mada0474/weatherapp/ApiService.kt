@@ -17,6 +17,10 @@ import java.nio.ByteBuffer
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
+/**
+ * This class handles the API calls.
+ * @author Mahmoud Daabas
+ */
 class ApiService {
 
     private var mainActivity: MainActivity
@@ -24,17 +28,26 @@ class ApiService {
     private lateinit var executor: Executor
     private lateinit var geocoder: Geocoder
 
+    /**
+     * Constructor.
+     */
     constructor(mainActivity: MainActivity){
          this.mainActivity = mainActivity;
      }
 
+    /**
+     * Interface to handle callbacks.
+     */
     interface ApiResponseCallback {
         fun onResponse(body: String?)
         fun onFailure()
     }
+
+    /**
+     * Gets long and lat for a specific city by using its name.
+     */
     fun getCoordinatesFromName(locationName: String, callback: ApiResponseCallback) {
         val url = "https://geocoding-api.open-meteo.com/v1/search?name=$locationName&count=10&language=en&format=json"
-
         val request = Request.Builder()
             .url(url)
             .build()
@@ -56,18 +69,9 @@ class ApiService {
         })
     }
 
-    fun getNameFromCoordinates(locationName: String): List<Address>? {
-        geocoder = Geocoder(mainActivity)
-        val addressList: List<Address>
-        addressList = geocoder.getFromLocationName(locationName, 1)!!;
-        if(addressList != null){
-            return addressList;
-        }
-        else {
-            return null;
-        }
-    }
-
+    /**
+     * Starts a call to the Weather API using coordinates to get weather data.
+     */
     fun getWeatherData(latitude: Double, longitude: Double){
         cronetEngine = CronetEngine.Builder(mainActivity).build()
         executor = Executors.newSingleThreadExecutor()
@@ -81,6 +85,9 @@ class ApiService {
         request.start();
     }
 
+    /**
+     * Handles the response from the call that was made to the API.
+     */
     private inner class MyUrlRequestCallback : UrlRequest.Callback() {
         override fun onRedirectReceived(
             request: UrlRequest?,

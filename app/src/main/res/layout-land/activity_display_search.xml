@@ -9,69 +9,84 @@
 
     <TextView
         android:id="@+id/cityTxt"
-        android:saveEnabled="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
+        android:saveEnabled="false"
         android:text="Malmo"
         android:textColor="#FFFEFE"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/temperatureTxt"
-        android:saveEnabled="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="168dp"
+        android:layout_marginBottom="32dp"
+        android:saveEnabled="false"
         android:text="23C"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="60sp"
         app:layout_constraintBottom_toTopOf="@+id/longTxt"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.403"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/weatherImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:saveEnabled="false"
+        app:layout_constraintBottom_toTopOf="@+id/temperatureTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.628"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cityTxt"
+        app:layout_constraintVertical_bias="0.253"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/longTxt"
-        android:saveEnabled="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:saveEnabled="false"
         android:text="Longitutde: "
         android:textAlignment="viewStart"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.786" />
+        app:layout_constraintVertical_bias="0.683" />
 
     <TextView
         android:id="@+id/latTxt"
-        android:saveEnabled="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:saveEnabled="false"
         android:text="Latitutde: "
         android:textAlignment="viewStart"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.852" />
+        app:layout_constraintVertical_bias="0.786" />
 
     <TextView
         android:id="@+id/timeTxt"
-        android:saveEnabled="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:saveEnabled="false"
         android:text="Time: "
         android:textAlignment="viewStart"
         android:textColor="#FFFFFF"
@@ -81,40 +96,26 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.912" />
+        app:layout_constraintVertical_bias="0.891" />
 
     <TextView
         android:id="@+id/windSpeedTxt"
-        android:saveEnabled="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:saveEnabled="false"
         android:text="Wind Speed: "
         android:textAlignment="viewStart"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.977" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
-
-    <ImageView
-        android:id="@+id/weatherImage"
-        android:saveEnabled="false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/temperatureTxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cityTxt"
-        app:layout_constraintVertical_bias="0.057"
-        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

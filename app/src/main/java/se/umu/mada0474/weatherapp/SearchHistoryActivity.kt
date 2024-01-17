@@ -1,7 +1,6 @@
 package se.umu.mada0474.weatherapp
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -9,8 +8,15 @@ import androidx.appcompat.widget.Toolbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class SearchHistoryActivity : ToolbarHandler() {
+/**
+ * This class manages the Search History part of the program.
+ * @author Mahmoud Daabas
+ */
+class SearchHistoryActivity : ToolbarHandlerActivity() {
 
+    /**
+     * Creates the view.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_history)
@@ -24,7 +30,10 @@ class SearchHistoryActivity : ToolbarHandler() {
         loadSearchHistory()
     }
 
-    fun loadSearchHistory(){
+    /**
+     * Loads the saved search history from the shared preferences.
+     */
+    private fun loadSearchHistory(){
         val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val gson = Gson()
 
@@ -35,7 +44,10 @@ class SearchHistoryActivity : ToolbarHandler() {
         populateListView(existingWeatherHistory)
     }
 
-    fun populateListView(existingWeatherHistory: ArrayList<String>) {
+    /**
+     * Fills the listview with the data that was loaded from the search history.
+     */
+    private fun populateListView(existingWeatherHistory: ArrayList<String>) {
         val listView: ListView = findViewById(R.id.listView)
         val adapter = ArrayAdapter(this, R.layout.list_view_row, existingWeatherHistory)
         listView.adapter = adapter

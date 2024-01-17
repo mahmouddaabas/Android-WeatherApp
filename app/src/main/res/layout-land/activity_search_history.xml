@@ -13,13 +13,15 @@
 
     <ListView
         android:id="@+id/listView"
-        android:saveEnabled="false"
-        android:layout_width="320dp"
-        android:layout_height="576dp"
+        android:layout_width="697dp"
+        android:layout_height="284dp"
+        android:layout_marginBottom="4dp"
         android:cacheColorHint="#FAF8F8"
+        android:saveEnabled="false"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.409"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
