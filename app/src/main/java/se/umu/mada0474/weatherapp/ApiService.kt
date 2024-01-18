@@ -1,7 +1,5 @@
 package se.umu.mada0474.weatherapp
 
-import android.location.Address
-import android.location.Geocoder
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -26,7 +24,6 @@ class ApiService {
     private var mainActivity: MainActivity
     private lateinit var cronetEngine: CronetEngine
     private lateinit var executor: Executor
-    private lateinit var geocoder: Geocoder
 
     /**
      * Constructor.

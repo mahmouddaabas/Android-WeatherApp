@@ -106,7 +106,6 @@ class MainActivity : ToolbarHandlerActivity(){
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location : Location? ->
                 if (location != null) {
-                    println("WOHOO")
                     apiService.getWeatherData(location.latitude, location.longitude)
                 }
             }

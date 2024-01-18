@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import se.umu.mada0474.weatherapp.constants.AppConstants
 
 /**
  * This class is used to handle permission for the application.
@@ -30,7 +29,7 @@ class AppPermissions{
     fun requestLocationPermission(activity: Activity) {
         ActivityCompat.requestPermissions(
             activity,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            AppConstants.LOCATION_REQUEST_CODE
+            2000
         )
     }
 }
