@@ -97,38 +97,16 @@ class MainActivity : ToolbarHandlerActivity(){
      * When called, this function will retrieve weather data from the API by using the devices current location.
      */
     private fun getDataFromAPIMobileLocation(){
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-        // Request last known location
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
-                if (location != null) {
-                    //If last location is not null.
-                    apiService.getWeatherData(location.latitude, location.longitude)
-                } else {
-                    //If last location is null request a new location.
-                    Toast.makeText(this@MainActivity, "Requesting new location, please wait.", Toast.LENGTH_LONG).show()
-                    requestNewLocation()
-                }
-            }
+        Toast.makeText(this@MainActivity, "Requesting new location, please wait.", Toast.LENGTH_LONG).show()
+        requestNewLocation()
     }
 
     /**
-     * Requests a new location if the last location of the device is null.
+     * Requests a new location.
      */
     private fun requestNewLocation() {
-        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, TimeUnit.SECONDS.toMillis(3)).build()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, TimeUnit.SECONDS.toMillis(5)).build()
         val locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 val location = locationResult.lastLocation
