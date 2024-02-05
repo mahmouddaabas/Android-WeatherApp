@@ -13,9 +13,14 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import org.json.JSONObject
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -102,13 +107,55 @@ class MainActivity : ToolbarHandlerActivity(){
         ) {
             return
         }
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        // Request last known location
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location : Location? ->
                 if (location != null) {
+                    //If last location is not null.
                     apiService.getWeatherData(location.latitude, location.longitude)
+                } else {
+                    //If last location is null request a new location.
+                    Toast.makeText(this@MainActivity, "Requesting new location, please wait.", Toast.LENGTH_LONG).show()
+                    requestNewLocation()
                 }
             }
+    }
+
+    /**
+     * Requests a new location if the last location of the device is null.
+     */
+    private fun requestNewLocation() {
+        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, TimeUnit.SECONDS.toMillis(3)).build()
+        val locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                val location = locationResult.lastLocation
+                //Use the new location that was requested.
+                if (location != null) {
+                    apiService.getWeatherData(location.latitude, location.longitude)
+                }
+                //Remove location updates as we only need one update
+                fusedLocationClient.removeLocationUpdates(this)
+            }
+        }
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            null
+        )
     }
 
     /**
@@ -132,13 +179,20 @@ class MainActivity : ToolbarHandlerActivity(){
         println(json)
         val intent = Intent(this, DisplaySearchActivity::class.java)
         intent.putExtra("weatherData", json.toString())
-        if(cityName == null){
-            val long = json.getString("longitude")
-            val lat = json.getString("latitude")
+        if (cityName == null) {
+            val longitude = json.getString("longitude")
+            val latitude = json.getString("latitude")
             val geocoder = Geocoder(this, Locale.getDefault())
-            val addresses: List<Address>? = geocoder.getFromLocation(lat.toDouble(), long.toDouble(), 1)
-            val cityName: String = addresses!![0].locality
-            intent.putExtra("cityName", cityName)
+            val addresses: List<Address>? = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+
+            if (!addresses.isNullOrEmpty()) {
+                val address = addresses[0]
+                val city = address.locality ?: address.subLocality ?: address.adminArea ?: "Unknown City"
+                intent.putExtra("cityName", city)
+            } else {
+                //If address is not available set city to Unknown City.
+                intent.putExtra("cityName", "Unknown City")
+            }
         }
         else {
             intent.putExtra("cityName", cityName)
