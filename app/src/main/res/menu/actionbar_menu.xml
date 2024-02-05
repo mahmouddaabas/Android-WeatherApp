@@ -2,9 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_item_1"
-        android:title="Exit" />
-    <item
         android:id="@+id/menu_item_2"
         android:title="Search History" />
     <item

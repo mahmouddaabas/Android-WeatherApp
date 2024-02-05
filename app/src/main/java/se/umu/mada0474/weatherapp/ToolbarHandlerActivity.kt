@@ -32,11 +32,6 @@ open class ToolbarHandlerActivity : AppCompatActivity() {
                 true
             }
 
-            R.id.menu_item_1 -> {
-                moveTaskToBack(true)
-                exitProcess(0)
-            }
-
             R.id.menu_item_2 -> {
                 val intent = Intent(this, SearchHistoryActivity::class.java)
                 startActivity(intent)
