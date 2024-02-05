@@ -37,6 +37,11 @@ class DisplaySearchActivity : ToolbarHandlerActivity() {
         val data = JSONObject(weatherData!!)
         val cityName = intent.getStringExtra("cityName")
         addDataToFields(data, cityName)
+
+        //Save weather data to history only when the activity is first created.
+        if (savedInstanceState == null) {
+            saveWeatherToHistory(data, cityName)
+        }
     }
 
     /**
@@ -51,7 +56,6 @@ class DisplaySearchActivity : ToolbarHandlerActivity() {
         temperatureTxt.text = "$temperature °C"
 
         setWeatherImage(temperature)
-        saveWeatherToHistory(temperature, cityName)
 
         val long = data.getString("longitude")
         val lat = data.getString("latitude")
@@ -85,9 +89,11 @@ class DisplaySearchActivity : ToolbarHandlerActivity() {
      * Saves the weather (temperature and city) to the shared preferences.
      * This is then displayed in SearchHistoryActivity.
      */
-    private fun saveWeatherToHistory(temperature: String, cityName: String?) {
+    private fun saveWeatherToHistory(data: JSONObject, cityName: String?) {
         val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val gson = Gson()
+
+        val temperature = data.getJSONObject("current_weather").getString("temperature")
 
         // Retrieve existing weather history
         val existingJson = sharedPreferences.getString("WEATHER_HISTORY_KEY", null)
